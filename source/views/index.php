@@ -73,15 +73,25 @@
                                         Status: 
                                         <?php 
                                             if ($task['status'])
-                                                echo '<input type="checkbox" name="status" disabled checked> (admin edited)';
+                                                echo '<input type="checkbox" name="status" disabled checked>';
                                             else
                                                 echo '<input type="checkbox" name="status" disabled>';
                                         ?>
                                     </span>
                                     </h3>
-                                    Task text: <p><?php echo $task['text']; ?></p>
+                                    Task text: <p><input type="text" style="border: none; background-color: white;" disabled name="text" value=<?php echo'"' . $task['text'] . '"'; ?> ></p>
+                                    <p><em>
+                                        <?php
+                                            if ($task['edid'])
+                                                echo 'Text changed by administrator';
+                                        ?>
+                                    </em></p>
                                 </div><!--//item-->
                             <?php endforeach;?>
+                            <?php 
+                                if ($feedBack)
+                                    echo $feedBack;
+                            ?>
                             <form action="" method="post">
                                 <input type="text" name="name" placeholder="Enter your name" required><br>
                                 <input type="email" name="email" placeholder="Enter your E-mail" required><br>

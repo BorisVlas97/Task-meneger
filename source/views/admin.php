@@ -81,10 +81,10 @@
                                                 ?>
                                             </span>
                                         </h3>
-                                        Task text: <p><?php echo $task['text']; ?></p>
+                                        Task text: <p><?php echo '<input type="text" name="text' . $task['id'] . '" value="' . $task['text'] . '">'; ?></p>
                                     </div><!--//item-->
                                 <?php endforeach;?>
-                                <input type="submit" value="Save" name="submit">
+                                <input type="submit" value="Save" name="submitUpdate">
                             </form>
                             <?php echo $pagination->get();?>
 

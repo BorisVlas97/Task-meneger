@@ -21,7 +21,7 @@ class Login{
 	public static function checkLogged(){
 		session_start();
 		if (isset($_SESSION['user']))
-			return $_SESSION['user'];
+			return true;
 
 		header("Location: /login");
 	}

@@ -13,30 +13,31 @@ class Admin{
 									OFFSET $page"
 									);
 		while($row = mysqli_fetch_assoc($result)){
-			$listId[] = ['id' => $row['id']];
+			$listId[] = ['id' => $row['id'],
+						'text' => $row['text'],
+						'edid' => $row['edid']];
 		}
-		echo '<pre>';
-		print_r($listId);
-		echo '</pre>';
-		echo '<pre>';
-		print_r($arrayPost);
-		echo '</pre>';
-		foreach ($listId as $id) {
-			$check = false;
-			foreach ($arrayPost as $key => $value) {
-				if ($key == $id['id']){
-					$check = true;
+		foreach ($listId as $list) {
+			$id = $list['id'];
+			$status = 0;
+			$text = $list['text'];
+			$changed = $list['edid'];
+			foreach ($arrayPost as $key => $value){
+				if ($key == $id){
+					$status = 1;
 					break;
 				}
 			}
-			if ($check){
-				mysqli_query($db, "UPDATE `task` SET `status` = '1' WHERE `task`.`id` =" . $id['id']);
-				echo $id['id'] . 'status = 1<br>';
+			foreach ($arrayPost as $key => $value){
+				if ($key == ('text' . $id)){
+					if ($text != $value){
+						$text = $value;
+						$changed = 1;
+					}
+					break;
+				}
 			}
-			else{
-				mysqli_query($db, "UPDATE `task` SET `status` = '0' WHERE `task`.`id` =" . $id['id']);
-				echo $id['id'] . 'sattus = 0<br>';
-			}
+			mysqli_query($db, "UPDATE `task` SET `status` = '$status', `text` = '$text', `edid` = '$changed' WHERE `task`.`id` = $id");
 		}
 	}
 }

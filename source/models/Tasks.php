@@ -20,7 +20,8 @@ class Tasks{
 						'email' => $row['email'],
 						'text' => $row['text'],
 						'status' => $row['status'],
-						'sort' => $sort];
+						'sort' => $sort,
+						'edid' => $row['edid']];
 		}
 		return $taskList;
 	}
@@ -34,9 +35,12 @@ class Tasks{
 	}
 
 	public static function createTask($name, $email, $text){
+		$result = false;
 		$db = Db::getConnection();
-
-		return mysqli_query($db, "INSERT INTO `task` (`name`, `email`, `text`) VALUES ('$name', '$email', '$text')");
+		$result = mysqli_query($db, "INSERT INTO `task` (`name`, `email`, `text`) VALUES ('$name', '$email', '$text')");
+		if ($result)
+			return true;
+		return false;
 	}
 
 	public static function checkEmail($email){

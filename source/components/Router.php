@@ -2,7 +2,7 @@
 
 class Router{
 
-	private $routes; //массив маршрутов
+	private $routes;
 
 	public function __construct(){
 		$routesPath = ROOT . '/source/config/routes.php';
@@ -15,11 +15,8 @@ class Router{
 	}
 
 	public function run(){ 
-		// Получить строку запроса
 
 		$uri = $this->getURI();
-
-		// Проверить наличие такого запроса в файле routes.php
 
 		foreach ($this->routes as $uriPattern => $path) {
 			if (preg_match("~$uriPattern~", $uri)){
@@ -28,11 +25,6 @@ class Router{
 
 
 				$segments = explode('/', $internalRoute);
-
-				//echo '<pre>';
-				//print_r($segments);
-				//print_r($_POST);
-				//echo '</pre>';
 				$controllerName = array_shift($segments) . 'Controller';
 				$controllerName = ucfirst($controllerName);
 				$actionName = 'action' . ucfirst(array_shift($segments));
@@ -51,11 +43,6 @@ class Router{
 				}
 			}
 		}
-		// Если есть совпадение, определить какой контроллер и action обрабатывают запрос
-
-		// Подключить файл класса-контроллера
-
-		// создать объект, вызвать метод (т. е. action)
 	}
 
 	public static function redirect($name){
